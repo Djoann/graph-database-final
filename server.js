@@ -3,6 +3,7 @@ var path = require('path');
 var http = require('http');
 //var twitter = require('./routes/twitterClient');
 var node = require('./routes/graphdb');
+var link = require('./routes/graphdb');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.get('/graphdb', node.findAll);
 
 //app.get('/graphdb/geo', node.findByBounds);
 app.post('/graphdb', node.addnode);
+app.post('/graphdb', link.addlink); // add link to db?
 app.get('/graphdb/:id', node.findById);
 // app.put('/graphdb/:id', node.updatenode);
 // app.delete('/graphdb/:id', node.deletenode);

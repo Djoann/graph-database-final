@@ -109,16 +109,11 @@ exports.findAll = function(req, res) {
 exports.addnode = function(req, res) {
     var node = { "node" : req.body } ;
     //node.name = node ;
-//    var coords = node.geometry.coordinates = node.geometry.coordinates
-//            || [];
+    var text = node.textNode;            
     var ok = false;
-//    if (coords) {
-//        var len = coords.length || 0;
-//        for ( var i = 0; i < len; i++) {
-//            coords[i] = parseFloat(coords[i]);
-//        }
-//    }
+
     node.dirty = true;
+    
     console.log('Adding node: ' + JSON.stringify(node));
     db.collection('graphdb', function(err, collection) {
         collection.insert(node, {
@@ -133,6 +128,31 @@ exports.addnode = function(req, res) {
         });
     });
 }
+
+exports.addlink = function(req, res) {
+    var link = { "link" : req.body } ;
+    //node.name = node ;
+    //var text = node.textNode;            
+    var ok = false;
+
+    link.dirty = true;
+    
+    console.log('Adding link: ' + JSON.stringify(link));
+    db.collection('graphdb', function(err, collection) {
+        collection.insert(link, {
+            safe : true
+        }, function(err, result) {
+            if (err) {
+                umxUtils.sendError(req, res, err);
+            } else {
+                console.log('Success: ' + JSON.stringify(result[0]));
+                res.send(result[0]);
+            }
+        });
+    });
+}
+
+
 
 exports.updatenode = function(req, res) {
     var id = req.params.id;
